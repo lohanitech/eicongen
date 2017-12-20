@@ -1,3 +1,5 @@
+import IconSizes from '../IconsSizes';
+
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
@@ -10,10 +12,11 @@ const nativeImage = require('electron').nativeImage
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+let selectedImagePath
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 1024, height: 600})
+  win = new BrowserWindow({width: 800, height: 500})
 
   // and load the index.html of the app.
 //   win.loadURL(url.format({
@@ -70,11 +73,30 @@ ipcMain.on('open-file', (event,arg)=>{
 
 function openFileDialog() {
     dialog.showOpenDialog(win,{title: "Open image"}, (paths)=>{
-      let image = nativeImage.createFromPath(paths[0])
-      let dataUrl = image.toDataURL();
-      win.webContents.send('file-opened',dataUrl);
-      // let imageResized = image.resize({width: 52, height: 52})
-      // imageResized = imageResized.toPNG()
-      // fs.writeFileSync("icon.png",imageResized);
+      if(paths){
+        selectedImagePath = paths[0]
+        // let dataUrl = image.toDataURL();
+        win.webContents.send('file-opened',paths[0]);
+        // let imageResized = image.resize({width: 52, height: 52})
+        // imageResized = imageResized.toPNG()
+        // fs.writeFileSync("icon.png",imageResized);
+
+      }
     })
+}
+
+ipcMain.on('generate-icon', (event,args)=>{
+  generateIcon()
+})
+
+function generateIcon() {
+  let base = "/home/dlohani/Documents/projects/icons-generated";
+  let directory = "./android"
+  if(!fs.existsSync(directory)){
+    fs.mkdirSync(directory);
+  }
+  // IconSizes.android.map(icon=>{
+  //   let image = this.state.nImage.resize({width: icon.size, height: icon.size});
+  //   fs.writeFileSync(directory+icon.path, image)
+  // })
 }

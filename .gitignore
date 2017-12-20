@@ -8,6 +8,8 @@
 
 # production
 /build
+/generated-icons
+/dev-back
 
 # misc
 .DS_Store

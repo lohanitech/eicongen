@@ -1,0 +1,10 @@
+.image-load{
+    text-align: center;
+}
+
+.image-load img{
+    width: 250px;
+    height: 250px;
+    display: block;
+    margin: 0 auto;
+}

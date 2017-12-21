@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import IconSizes from './IconsSizes';
 import ImageLoad from '../components/image-load/ImageLoad';
+import GeneratorOptions from '../components/generator/GeneratorOptions';
 
 const electron = window.require('electron')
 const ipcRenderer = electron.ipcRenderer;
@@ -16,29 +17,37 @@ class App extends Component {
   }  
 
 
-  handleGenerateIcon = () => {
-    // ipcRenderer.send('generate-icons')
+  handleGenerateIcon = (whichIcons) => {
     let base = "./generated-icons/";
     if(!fs.existsSync(base)){
       fs.mkdirSync(base);
     }
-    let androidDir = base + "android/"
-    this.mkdir(androidDir)
-    this.generateAndroidIcons(androidDir)
+
+    if(whichIcons.android){
+        let androidDir = base + "android/"
+        this.mkdir(androidDir)
+        this.generateAndroidIcons(androidDir)
+    }
+
+    if(whichIcons.ios){
+      let iosDir = base + "ios/";
+      this.mkdir(iosDir);
+      iosDir += "AppIcon.appiconset/"
+      this.mkdir(iosDir);
+      this.generateIOSIcons(iosDir);
+    }
     
-    let iosDir = base + "ios/";
-    this.mkdir(iosDir);
-    iosDir += "AppIcon.appiconset/"
-    this.mkdir(iosDir);
-    this.generateIOSIcons(iosDir);
+    if(whichIcons.web){
+      let webDir = base + "web/"
+      this.mkdir(webDir);
+      this.generateWebIcons(webDir)
+    }
 
-    let webDir = base + "web/"
-    this.mkdir(webDir);
-    this.generateWebIcons(webDir)
-
-    let watchkitDir = base + 'watchkit/'
-    this.mkdir(watchkitDir)
-    this.generateWatchKitIcons(watchkitDir);
+    if(whichIcons.watchkit){
+      let watchkitDir = base + 'watchkit/'
+      this.mkdir(watchkitDir)
+      this.generateWatchKitIcons(watchkitDir);
+    }
   }
 
   generateWatchKitIcons = base => {
@@ -93,14 +102,7 @@ class App extends Component {
           <ImageLoad onLoadImage = {this.handleImageLoad} />
         </div>
         <div className="right">
-          <p>Save to</p>
-          <ul>
-            <li>Android</li>
-            <li>iOS</li>
-            <li>Web</li>
-            <li>WatchKit</li>
-          </ul>
-          <button onClick={this.handleGenerateIcon}>Generate Icons</button>
+          <GeneratorOptions onGenerate={this.handleGenerateIcon} />
         </div>
       </div>
     );

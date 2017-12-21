@@ -14,11 +14,15 @@ class ImageLoad extends React.Component{
 
     componentWillMount() {
         ipcRenderer.on('file-opened',(event,args)=>{
-            this.props.onLoadImage(args)
-          let image = nativeImage.createFromPath(args)
-          this.setState({
+            this.loadImageFromPath(args)
+        })
+    }
+    
+    loadImageFromPath = path => {
+        this.props.onLoadImage(path)
+        let image = nativeImage.createFromPath(path)
+        this.setState({
             image: image.toDataURL()
-          })
         })
     }
 
@@ -26,9 +30,17 @@ class ImageLoad extends React.Component{
         ipcRenderer.send('open-file')
     }
 
+    handleDrop = ev => {
+        ev.preventDefault()
+        let files = ev.dataTransfer.files
+        if(files && files.length > 0){
+            this.loadImageFromPath(files[0].path)
+        }
+    }
+
     render(){
         return(
-            <div className="image-load">
+            <div onDrop={this.handleDrop} onDragOver={ev=>ev.preventDefault()} className="image-load">
                 <img src={this.state.image} className="image-preview" alt="preview" />
                 <button onClick={this.handleButtonClick}>Open file</button>
             </div>

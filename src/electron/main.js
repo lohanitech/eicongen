@@ -58,3 +58,21 @@ function openFileDialog() {
       }
     })
 }
+
+
+ipcMain.on('select-target-folder', (event, arg) => {
+  openSelectTargetFolder(arg)
+})
+
+function openSelectTargetFolder(defaultPath) {
+  dialog.showOpenDialog(win,{
+    title: "Save generated icons to",
+    properties: ["openDirectory"],
+    defaultPath: defaultPath,
+    buttonLabel: "Save"
+  }, paths => {
+    if(paths && paths.length > 0){
+      win.webContents.send('target-folder-opened', paths[0])
+    }
+  })
+}

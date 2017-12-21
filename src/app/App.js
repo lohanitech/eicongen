@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import IconSizes from './IconsSizes';
+import ImageLoad from '../components/image-load/ImageLoad';
 
 const electron = window.require('electron')
 const ipcRenderer = electron.ipcRenderer;
@@ -11,24 +12,9 @@ const fs = electron.remote.require('fs');
 
 class App extends Component {
   state = {
-    image: logo,
     nImage: null
-  }
-  
-  componentWillMount() {
-    ipcRenderer.on('file-opened',(event,args)=>{
-      let image = nativeImage.createFromPath(args);
-      this.setState({
-        image: image.toDataURL(),
-        nImage: image 
-      })
-    })
-  }
-  
+  }  
 
-  handleButtonClick = () => {
-    ipcRenderer.send('open-file')
-  }
 
   handleGenerateIcon = () => {
     // ipcRenderer.send('generate-icons')
@@ -92,12 +78,19 @@ class App extends Component {
     }
   }
 
+  handleImageLoad = path => {
+    console.log(path)
+    let image = nativeImage.createFromPath(path);
+    this.setState({
+      nImage: image 
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <div className="left">
-          <img src={this.state.image} className="image-preview" alt="preview" />
-          <button onClick={this.handleButtonClick}>Open file</button>
+          <ImageLoad onLoadImage = {this.handleImageLoad} />
         </div>
         <div className="right">
           <p>Save to</p>

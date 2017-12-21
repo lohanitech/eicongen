@@ -1,0 +1,17 @@
+.image-load{
+    text-align: center;
+    position: relative;
+    border: 1px solid #fff;
+    padding-top: 20px;
+}
+
+.image-load img{
+    width: 250px;
+    height: 250px;
+    display: block;
+    margin: 0 auto;
+}
+
+.drag-enter{
+    border: 1px solid #000;
+}

@@ -5,7 +5,6 @@ import './styles.css';
 const electron = window.require('electron')
 const ipcRenderer = electron.ipcRenderer;
 const nativeImage = electron.nativeImage
-const fs = electron.remote.require('fs');
 
 class ImageLoad extends React.Component{
     state = {

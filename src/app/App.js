@@ -18,6 +18,10 @@ class App extends Component {
 
 
   handleGenerateIcon = (whichIcons) => {
+    if(!this.state.nImage){
+      console.error('No image selected');
+      return;
+    }
     let base = whichIcons.saveTarget;
     if(!fs.existsSync(base)){
       fs.mkdirSync(base);

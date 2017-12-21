@@ -9,7 +9,8 @@ const fs = electron.remote.require('fs');
 
 class ImageLoad extends React.Component{
     state = {
-        image: logo
+        image: logo,
+        dragEnter: false
     }
 
     componentWillMount() {
@@ -31,16 +32,32 @@ class ImageLoad extends React.Component{
     }
 
     handleDrop = ev => {
-        ev.preventDefault()
+        this.dragEnd(ev)
         let files = ev.dataTransfer.files
         if(files && files.length > 0){
             this.loadImageFromPath(files[0].path)
         }
     }
 
+    dragEnter = ev => {
+        ev.preventDefault()
+        this.setState({dragEnter: true})
+    }
+
+
+    dragEnd = ev => {
+        ev.preventDefault()
+        this.setState({dragEnter: false})
+    }
+    
     render(){
         return(
-            <div onDrop={this.handleDrop} onDragOver={ev=>ev.preventDefault()} className="image-load">
+            <div
+                onDrop={this.handleDrop}
+                onDragLeave={this.dragEnd}
+                onDragOver={this.dragEnter}
+                className={"image-load " + (this.state.dragEnter && 'drag-enter')}
+            >
                 <img src={this.state.image} className="image-preview" alt="preview" />
                 <button onClick={this.handleButtonClick}>Open file</button>
             </div>

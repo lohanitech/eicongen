@@ -1,11 +1,24 @@
 import React from 'react';
 
+const electron = window.require('electron')
+const path = window.require('path');
+const ipcRenderer = electron.ipcRenderer;
+const nativeImage = electron.nativeImage
+const fs = electron.remote.require('fs');
+
 class GeneratorOptions extends React.Component{
     state = {
         android: true,
         ios: true,
         web: true,
-        watchkit: true
+        watchkit: true,
+        saveTarget: path.resolve(path.join('./','icons'))
+    }
+
+    componentWillMount() {
+        ipcRenderer.on('target-folder-opened',(event,args)=>{
+            this.setState({saveTarget: path.join(args,'icons')})
+        })
     }
 
     handleButtonClick = ev => {
@@ -16,10 +29,20 @@ class GeneratorOptions extends React.Component{
         this.setState({[ev.target.value]: !this.state[ev.target.value]})
     }
 
+    selectTargetFolder = ev => {
+        ipcRenderer.send('select-target-folder',path.resolve('./'));
+    }
+
     render(){
         return(
             <div className="generator-options">
-                <p>Save to</p>
+                <p>
+                    Save to <br />
+                    {this.state.saveTarget} <br />
+                    <button onClick={this.selectTargetFolder}>Change</button>
+                </p>
+
+
                 <ul>
                     <li>
                         <label>

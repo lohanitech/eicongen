@@ -6,8 +6,8 @@ import ImageLoad from '../components/image-load/ImageLoad';
 import GeneratorOptions from '../components/generator/GeneratorOptions';
 
 const electron = window.require('electron')
-const ipcRenderer = electron.ipcRenderer;
 const nativeImage = electron.nativeImage
+const path = window.require('path')
 const fs = electron.remote.require('fs');
 
 
@@ -18,19 +18,19 @@ class App extends Component {
 
 
   handleGenerateIcon = (whichIcons) => {
-    let base = "./generated-icons/";
+    let base = whichIcons.saveTarget;
     if(!fs.existsSync(base)){
       fs.mkdirSync(base);
     }
 
     if(whichIcons.android){
-        let androidDir = base + "android/"
+        let androidDir = base + "/android/"
         this.mkdir(androidDir)
         this.generateAndroidIcons(androidDir)
     }
 
     if(whichIcons.ios){
-      let iosDir = base + "ios/";
+      let iosDir = base + "/ios/";
       this.mkdir(iosDir);
       iosDir += "AppIcon.appiconset/"
       this.mkdir(iosDir);
@@ -38,13 +38,13 @@ class App extends Component {
     }
     
     if(whichIcons.web){
-      let webDir = base + "web/"
+      let webDir = base + "/web/"
       this.mkdir(webDir);
       this.generateWebIcons(webDir)
     }
 
     if(whichIcons.watchkit){
-      let watchkitDir = base + 'watchkit/'
+      let watchkitDir = base + '/watchkit/'
       this.mkdir(watchkitDir)
       this.generateWatchKitIcons(watchkitDir);
     }
@@ -88,7 +88,6 @@ class App extends Component {
   }
 
   handleImageLoad = path => {
-    console.log(path)
     let image = nativeImage.createFromPath(path);
     this.setState({
       nImage: image 

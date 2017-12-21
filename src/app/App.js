@@ -7,7 +7,6 @@ import GeneratorOptions from '../components/generator/GeneratorOptions';
 
 const electron = window.require('electron')
 const nativeImage = electron.nativeImage
-const path = window.require('path')
 const fs = electron.remote.require('fs');
 
 
@@ -58,6 +57,7 @@ class App extends Component {
     IconSizes.watchkit.map(icon =>{
       let image = this.state.nImage.resize({width: icon.size, height: icon.size});
       fs.writeFileSync(base+icon.name, image.toPng())
+      return true;
     })
   }
 
@@ -65,6 +65,7 @@ class App extends Component {
     IconSizes.web.map(icon =>{
       let image = this.state.nImage.resize({width: icon.size, height: icon.size});
       fs.writeFileSync(base+icon.size+".png", image.toPng())
+      return true;
     })
 
   }
@@ -73,6 +74,7 @@ class App extends Component {
     IconSizes.ios.map(icon =>{
       let image = this.state.nImage.resize({width: icon.size, height: icon.size});
       fs.writeFileSync(base+icon.name, image.toPng())
+      return true;
     })
   }
 
@@ -82,6 +84,7 @@ class App extends Component {
       this.mkdir(dirname); 
       let image = this.state.nImage.resize({width: icon.size, height: icon.size});
       fs.writeFileSync(dirname+"ic_launcher.png", image.toPng())
+      return true;
     })
   }
 

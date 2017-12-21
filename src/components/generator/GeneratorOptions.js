@@ -1,10 +1,9 @@
 import React from 'react';
+import './styles.css'
 
 const electron = window.require('electron')
 const path = window.require('path');
 const ipcRenderer = electron.ipcRenderer;
-const nativeImage = electron.nativeImage
-const fs = electron.remote.require('fs');
 
 class GeneratorOptions extends React.Component{
     state = {

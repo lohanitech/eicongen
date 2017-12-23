@@ -1,5 +1,6 @@
 import React from 'react';
 import './styles.css'
+import Checkbox from '../checkbox/Checkbox';
 
 const electron = window.require('electron')
 const path = window.require('path');
@@ -44,24 +45,16 @@ class GeneratorOptions extends React.Component{
 
                 <ul>
                     <li>
-                        <label>
-                            <input type="checkbox" onChange={this.handleCheckChange} value="android" checked={this.state.android} /> Android
-                        </label>
+                        <Checkbox id="android" label="Android" checked={this.state.android} onChange={this.handleCheckChange} value="android" />
                     </li>
                     <li>
-                        <label>
-                            <input type="checkbox" onChange={this.handleCheckChange} value="ios" checked={this.state.ios} /> iOS
-                        </label>
+                        <Checkbox id="ios" label="iOS" checked={this.state.ios} onChange={this.handleCheckChange} value="ios" />
                     </li>
                     <li>
-                        <label>
-                            <input type="checkbox" onChange={this.handleCheckChange} value="web" checked={this.state.web} /> Web
-                        </label>
+                        <Checkbox id="web" label="Web" checked={this.state.web} onChange={this.handleCheckChange} value="web" />
                     </li>
                     <li>
-                        <label>
-                            <input type="checkbox" onChange={this.handleCheckChange} value="watchkit" checked={this.state.watchkit} /> Watchkit
-                        </label>
+                        <Checkbox id="watchkit" label="Watchkit" checked={this.state.watchkit} onChange={this.handleCheckChange} value="watchkit" />
                     </li>
                 </ul>
                 <button onClick={this.handleButtonClick}>Generate Icons</button>

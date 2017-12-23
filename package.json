@@ -16,8 +16,20 @@
     "electron": "electron ."
   },
   "devDependencies": {
-    "electron": "^1.7.10",
+    "electron": "^1.8.1",
+    "electron-builder": "^19.49.0",
     "foreman": "^2.0.0"
   },
-  "main": "src/electron/main.js"
+  "description": "Icons Generator",
+  "homepage": "./",
+  "main": "electron/main.js",
+  "build": {
+    "appId": "com.lohanitech.ionic-electron-test",
+    "electronVersion": "1.8.1",
+    "asar": false,
+    "files": [
+      "build/**/*",
+      "electron/*"
+    ]
+  }
 }

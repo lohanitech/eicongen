@@ -10,6 +10,8 @@
 /build
 /generated-icons
 /dev-back
+/dist
+
 
 # misc
 .DS_Store

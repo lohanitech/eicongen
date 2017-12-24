@@ -2,6 +2,8 @@
   "name": "eicongen",
   "version": "0.1.0",
   "private": true,
+  "author": "Damodar Lohani",
+  "author-url": "https://dlohani.com.np",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -13,7 +15,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "ebuild":"yarn build && node_modules/.bin/build"
   },
   "devDependencies": {
     "electron": "^1.8.1",
@@ -24,9 +27,16 @@
   "homepage": "./",
   "main": "electron/main.js",
   "build": {
-    "appId": "com.lohanitech.ionic-electron-test",
+    "productName": "App Icon Generator",
+    "directories": {
+      "buildResources": "build-resources"
+    },
+    "appId": "com.olohanitech.eicongen",
     "electronVersion": "1.8.1",
-    "asar": false,
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
     "files": [
       "build/**/*",
       "electron/*"

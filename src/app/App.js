@@ -8,6 +8,7 @@ import GeneratorOptions from '../components/generator/GeneratorOptions';
 const electron = window.require('electron')
 const nativeImage = electron.nativeImage
 const fs = electron.remote.require('fs');
+const shell = electron.shell;
 
 
 class App extends Component {
@@ -51,6 +52,8 @@ class App extends Component {
       this.mkdir(watchkitDir)
       this.generateWatchKitIcons(watchkitDir);
     }
+
+    shell.openItem(base)
   }
 
   generateWatchKitIcons = base => {

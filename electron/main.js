@@ -1,8 +1,6 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu, ipcMain, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
-const {ipcMain} = require('electron')
-const {dialog} = require('electron')
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -10,9 +8,17 @@ const {dialog} = require('electron')
 let win
 let selectedImagePath
 
+Menu.setApplicationMenu(null)
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 500})
+  win = new BrowserWindow({
+    width: 800,
+    height: 400,
+    resizable: false,
+    maximizable: false,
+    fullscreenable: false
+  })
+  win.setMenu(null)
 
 
     const startUrl = process.env.ELECTRON_START_URL || url.format({
